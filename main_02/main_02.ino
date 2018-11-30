@@ -6,7 +6,7 @@
 #include <Servo.h>
 
 
-Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
+Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
 
 LEDController controller = LEDController();
 
@@ -24,7 +24,7 @@ int curSpeed = 90;
 void setup() {
 
   pwm.begin();
-  pwm.setPWMFreq(1600);
+  pwm.setPWMFreq(120);
 
   Serial.begin(9600);
 
@@ -33,7 +33,11 @@ void setup() {
   timeBegan_s1 = millis();
   curTime = millis();
 
-  led1.setCurColor({120, 120, 120});
+  //led1.setCurColor({120, 120, 120});
+  pwm.setPin(led1.getPower(), 4096, false );
+  pwm.setPin(led1.getR(), 4096, true );
+  pwm.setPin(led1.getG(), 4096, true );
+  pwm.setPin(led1.getB(), 4096, true );
 
 }
 
